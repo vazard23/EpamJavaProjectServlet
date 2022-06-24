@@ -36,10 +36,26 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getAll() throws ServiceException {
-        return null;
+    public boolean setUserOffer(int user_id, int offer_id) {
+        Offer offer = null;
+    //    try {
+//            offer = offerDao.getById(offer_id);
+//            book.setStatus(2);
+//            book.setPerson_id(person_id);
+//            bookDAO.updateEntity(book);
+//            return true;
+//        } catch (DataBaseException e) {
+//            logger.error("error setBookForApprove");
+          return false;
+     //   }
     }
 
+    @Override
+    public List<Offer> getAll() throws ServiceException {
+        return offerDao.getAll();
+    }
+
+    //TODO getUserOffers
     @Override
     public List<Offer> getAllOffers() {
         return null;

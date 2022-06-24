@@ -34,7 +34,7 @@ public class ServiceFactory {
         return personService;
     }
 
-    public OfferService getBookService() {
+    public OfferService getBOfferService() {
         return offerService;
     }
 

@@ -26,7 +26,7 @@ public abstract class CommandUtil {
         try {
             requestDispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
-
+            e.printStackTrace();
         }
     }
 
