@@ -1,3 +1,4 @@
+
 CREATE TABLE "person" (
                                "id" serial NOT NULL,
                                "name" text NOT NULL,

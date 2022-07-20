@@ -17,16 +17,14 @@ import java.util.List;
 
 public class PersonDatabaseDao implements PersonDao {
 
-    public PersonDatabaseDao(){
+    public PersonDatabaseDao() {
     }
 
 
-
     @Override
-    public boolean add(Person person) throws SQLException, NamingException {
-        Connection connection = Connector.getInstance().getConnection();
-        connection.setAutoCommit(false);
-        try {
+    public boolean add(Person person) throws NamingException {
+        try (Connection connection = Connector.getInstance().getConnection()) {
+            connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(Constants.INSERT_PERSON);
             statement.setString(1, person.getName());
             statement.setString(2, person.getLogin());
@@ -41,7 +39,7 @@ public class PersonDatabaseDao implements PersonDao {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException();
+            throw new NamingException();
         }
     }
 

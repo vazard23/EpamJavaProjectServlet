@@ -10,6 +10,7 @@ public class Offer extends Model{
     private double price;
     private int category_id;
 
+
     @Override
     public int getId() {
         return id;

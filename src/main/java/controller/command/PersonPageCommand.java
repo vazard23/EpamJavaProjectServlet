@@ -20,13 +20,11 @@ public class PersonPageCommand implements Command {
 
         String button = req.getParameter("button");
 
-        if (button != null && button.equals("offer")) {
-            int offer_id = Integer.parseInt(req.getParameter("id"));
-
-    //        offerService.setOfferForUser(id_book, person.getId());
-
-        }
-
+        try {
+            Integer id = Integer.parseInt(req.getParameter("id"));
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
         try {
             List<Offer> offers = offerService.getAll();
 
@@ -36,6 +34,6 @@ public class PersonPageCommand implements Command {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-
+    }
     }
 }

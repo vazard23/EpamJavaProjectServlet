@@ -10,6 +10,7 @@ public final class Constants {
 
     //Offers constants
     public static final String ALL_OFFERS = "SELECT * FROM offers";
+    public static final String SELECT_BY_ID_OFFER = "SELECT * FROM offers WHERE id = ?";
 
     //Selecting constants
     public static final String SELECT_BY_ID_PERSON = "SELECT * FROM person WHERE id = ?";

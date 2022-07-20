@@ -16,25 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferDatabaseDao implements OfferDao {
+
     @Override
-    public boolean add(Model entity) throws DataBaseException, SQLException, NamingException {
+    public boolean add(Offer entity) throws DataBaseException, SQLException, NamingException {
         return false;
     }
 
     @Override
-    public Model getById(Object id) throws DataBaseException {
+    public Offer getById(Integer id) throws DataBaseException {
         return null;
     }
 
     @Override
-    public boolean deleteEntity(Object id) throws NamingException, SQLException {
+    public boolean deleteEntity(Integer id) throws NamingException, SQLException {
         return false;
     }
 
     @Override
-    public Model updateEntity(Model entity) {
+    public Offer updateEntity(Offer entity) {
         return null;
     }
+
 
     @Override
     public List<Offer> getAllFree() {

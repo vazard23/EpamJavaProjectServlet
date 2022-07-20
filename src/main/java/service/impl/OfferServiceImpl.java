@@ -37,16 +37,14 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public boolean setUserOffer(int user_id, int offer_id) {
-        Offer offer = null;
-    //    try {
-//            offer = offerDao.getById(offer_id);
-//            book.setStatus(2);
-//            book.setPerson_id(person_id);
-//            bookDAO.updateEntity(book);
-//            return true;
-//        } catch (DataBaseException e) {
-//            logger.error("error setBookForApprove");
-          return false;
+     //   Offer offer = null;
+      //try {
+           //offer = offerDao.getById(offer_id);
+    //       offer.setPerson_id(person_id);
+        //   offerDao.updateEntity(offer);
+           return true;
+     //  } catch (DataBaseException e) {
+      //    return false;
      //   }
     }
 
