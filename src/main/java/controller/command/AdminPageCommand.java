@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminPageCommand implements Command{
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
+
         CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminPage.jsp");
     }
 }

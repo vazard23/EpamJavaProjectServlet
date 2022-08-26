@@ -97,6 +97,12 @@ public class Offer extends Model{
         public Offer build(){
             return new Offer(this);
         }
+
+        @Override
+        public OfferBuilder setCategoryId(int category_id) {
+            this.category_id = category_id;
+            return this;
+        }
     }
 
     public Offer(){

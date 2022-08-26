@@ -8,4 +8,6 @@ public interface OfferDao extends CrudDao<Integer, Offer> {
     List<Offer> getAllFree();
 
     List<Offer> getAll();
+
+    List<Offer> getAllOffersById(int person_id);
 }

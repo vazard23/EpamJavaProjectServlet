@@ -3,6 +3,7 @@ package model.dao.impl;
 import model.dao.PersonDao;
 import model.dao.connection.Connector;
 import model.dao.constant.Constants;
+import model.entity.Offer;
 import model.entity.Person;
 import model.exception.DataBaseException;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,7 +33,7 @@ public class PersonDatabaseDao implements PersonDao {
             statement.setString(3, person.getPassword());
             statement.setString(4, person.getEmail());
             statement.setInt(5, person.getAccessLevel());
-            statement.setDouble(6, person.getFundsFunds());
+            statement.setDouble(6, person.getFunds());
             statement.setInt(7, person.getStatus());
             statement.setInt(8, 2);
             statement.execute();
@@ -73,8 +75,25 @@ public class PersonDatabaseDao implements PersonDao {
     }
 
     @Override
-    public Person updateEntity(Person entity) {
-        return null;
+    public Person updateEntity(Person person) {
+        try (Connection con = Connector.getInstance().getConnection();
+             PreparedStatement statement = con.prepareStatement(Constants.UPDATE_PERSON)) {
+            con.setAutoCommit(false);
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getLogin());
+            statement.setString(3, person.getPassword());
+            statement.setString(4, person.getEmail());
+            statement.setInt(5, person.getAccessLevel());
+            statement.setDouble(6, person.getFunds());
+            statement.setInt(7, person.getStatus());
+            statement.setInt(8, 2); //TODO ROLE GET???
+            statement.setInt(9, person.getId());
+            statement.executeUpdate();
+            con.commit();
+            return person;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot update user ", e);
+        }
     }
 
     @Override
@@ -126,4 +145,5 @@ public class PersonDatabaseDao implements PersonDao {
         }
         return count;
     }
+
 }

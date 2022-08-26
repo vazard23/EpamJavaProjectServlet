@@ -22,11 +22,19 @@ public abstract class CommandUtil {
     }
 
     public static void goToPage(HttpServletRequest req, HttpServletResponse resp, String url) {
-        var requestDispatcher = req.getRequestDispatcher(url);
-        try {
-            requestDispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
+        if(url.contains("redirect:")){
+            try {
+                resp.sendRedirect(url.replace("redirect:", "/EpamJavaProjectServlet_Web_exploded"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            try {
+                var requestDispatcher = req.getRequestDispatcher(url);
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

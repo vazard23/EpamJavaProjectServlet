@@ -60,8 +60,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer getOfferbyPerson(int person_id) {
-        return null;
+    public List<Offer> getAllOffersById(int person_id) {
+        return offerDao.getAllOffersById(person_id);
+    }
+
+    @Override
+    public Offer getOfferById(int offer_id) throws DataBaseException {
+        return offerDao.getById(offer_id);
     }
 }
 

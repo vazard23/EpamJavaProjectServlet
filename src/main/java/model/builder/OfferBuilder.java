@@ -7,5 +7,6 @@ public interface OfferBuilder {
     OfferBuilder setName(String name);
     OfferBuilder setDescription(String description);
     OfferBuilder setPrice(double price);
+    OfferBuilder setCategoryId(int category_id);
     Offer build();
 }

@@ -12,36 +12,63 @@
     <title>Person Page</title>
 </head>
 <body>
-Person
+<%@page import="java.util.*" session ="true" %>
+<h1>Hello, <%= session.getAttribute("name") %> </h1>
+
+<h1>Balance: <%= session.getAttribute("funds") %> ₴</h1>
+
+
 <form action="${pageContext.request.contextPath}/view/logout">
-<a>
-    <button>Logout</button>
-</a>
-    <table class="tableService sortable">
-        <thead>
-        <tr>
-            <th>Name of the offer</th>
-            <th>Description</th>
-            <th>Price in UAH</th>
-            <th>Category of offer<th>
-        </tr>
-        </thead>
-        <tbody>
+    <a>
+        <button>Logout</button>
+    </a>
+</form>
+
+<form action="${pageContext.request.contextPath}/view/deposit">
+    <a>
+        <button>Deposit</button>
+    </a>
+</form>
+
+<form action="${pageContext.request.contextPath}/view/offerListPerson">
+    <a>
+        <button>Our Offers</button>
+    </a>
+</form>
+
+<table class="tableService sortable">
+    <thead>
+    <tr>
+        <th>Name of the offer</th>
+        <th>Description</th>
+        <th>Price in UAH</th>
+        <th>Category of offer
+        <th>Status of Offer</th>
+    </tr>
+    </thead>
+    <tbody>
     <c:forEach items="${offers}" var="a">
         <tr>
             <td>${a.name}</td>
             <td>${a.description}</td>
             <td>${a.price}₴</td>
-            <td>${a.category_id}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=offer"
-                   onclick="return confirm('<fmt:message
-                           key="accept_offer"/>')"><fmt:message key="offer"/></a>
+                <c:if test="${a.category_id == 1}">
+                    <c:out value="TV" />
+                </c:if>
+                <c:if test="${a.category_id == 2}">
+                    <c:out value="Web" />
+                </c:if>
+                <c:if test="${a.category_id == 3}">
+                    <c:out value="Telephone" />
+                </c:if>
+
+            <td>
+                Placeholder for status
             </td>
         </tr>
     </c:forEach>
-        </tbody>
-    </table>
-</form>
+    </tbody>
+</table>
 </body>
 </html>

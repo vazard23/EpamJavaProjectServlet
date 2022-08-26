@@ -138,12 +138,11 @@ public class Person extends Model {
 
     public void setFunds(double funds){ this.funds = funds;}
 
-    public double getFundsFunds(){ return funds; }
+    public double getFunds(){ return funds; }
 
     public void setLogin(String login){ this.login = login; }
 
     public String getLogin(){ return login; }
-
 
 
 }

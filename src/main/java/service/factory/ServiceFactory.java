@@ -4,7 +4,6 @@ import service.OfferService;
 import service.PersonService;
 import service.impl.OfferServiceImpl;
 import service.impl.PersonServiceImpl;
-import org.apache.log4j.Logger;
 
 public class ServiceFactory {
 
@@ -34,7 +33,7 @@ public class ServiceFactory {
         return personService;
     }
 
-    public OfferService getBOfferService() {
+    public OfferService getOfferService() {
         return offerService;
     }
 
