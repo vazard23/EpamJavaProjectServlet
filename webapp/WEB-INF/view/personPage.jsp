@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:set var="language" value="${not empty param.language ? param.language : pageContext.request.locale}"
+       scope="application"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
     <style>
@@ -12,10 +18,9 @@
     <title>Person Page</title>
 </head>
 <body>
-<%@page import="java.util.*" session ="true" %>
-<h1>Hello, <%= session.getAttribute("name") %> </h1>
+<h1> <fmt:message key="hello"/>, <%= session.getAttribute("name") %> </h1>
 
-<h1>Balance: <%= session.getAttribute("funds") %> ₴</h1>
+<h1><fmt:message key="balance"/>: <%= session.getAttribute("funds") %> ₴</h1>
 
 
 <form action="${pageContext.request.contextPath}/view/logout">
@@ -62,7 +67,6 @@
                 <c:if test="${a.category_id == 3}">
                     <c:out value="Telephone" />
                 </c:if>
-
             <td>
                 Placeholder for status
             </td>

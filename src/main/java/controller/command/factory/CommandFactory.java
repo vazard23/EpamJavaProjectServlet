@@ -2,6 +2,7 @@ package controller.command.factory;
 
 import controller.command.Command;
 import controller.command.*;
+import controller.command.adminPack.*;
 import controller.command.utils.Operation;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +22,10 @@ public class CommandFactory {
         allKnownCommandMap.put(Operation.DEPOSIT, new DepositCommand());
         allKnownCommandMap.put(Operation.OFFER_PERSON_LIST, new OfferListPersonCommand());
         allKnownCommandMap.put(Operation.CHECK_OFFER_ACCEPT, new CheckOfferAcceptCommand());
-//        allKnownCommandMap.put(Operation.LIST_PERSON, new ListPersonCommand());
-//        allKnownCommandMap.put(Operation.PERSON_PROFILE, new PersonProfilePageCommand());
-//        allKnownCommandMap.put(Operation.ORDER, new OrderAdminCommand());
-//        allKnownCommandMap.put(Operation.PERSON_ORDER, new PersonOrderPageCommand());
+        allKnownCommandMap.put(Operation.ADD_NEW_OFFER, new AdminAddOfferCommand());
+        allKnownCommandMap.put(Operation.ADD_NEW_PERSON, new AdminUserRegisterCommand());
+        allKnownCommandMap.put(Operation.ADMIN_CHANGE_OFFER, new AdminOfferChangeCommand());
+        allKnownCommandMap.put(Operation.ADMIN_CHANGE_OFFER_FORM, new AdminOfferChangeFormCommand());
     }
 
 

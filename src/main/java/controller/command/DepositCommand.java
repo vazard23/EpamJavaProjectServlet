@@ -31,12 +31,10 @@ public class DepositCommand implements Command{
                 person.setFunds(moneyToAdd);
                 personService.update(person);
                 try {
-                    command = CommandFactory.getCommand("/view/personPage");
-                    command.execute(req, resp);
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/personPage");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");
                 return;
             }
         }

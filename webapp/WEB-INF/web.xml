@@ -13,6 +13,16 @@
         <servlet-class>controller.servlet.DispatcherServlet</servlet-class>
     </servlet>
     
+    <filter>
+        <filter-name>LanguageFilter</filter-name>
+        <filter-class>controller.filter.LanguageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LanguageFilter</filter-name>
+        <url-pattern>/view/language/*</url-pattern>
+    </filter-mapping>
+    
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/view/*</url-pattern>

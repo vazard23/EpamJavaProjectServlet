@@ -1,7 +1,9 @@
 package controller.command;
 
+import controller.command.factory.CommandFactory;
 import controller.command.utils.CommandUtil;
 import model.entity.Offer;
+import model.entity.Person;
 import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,18 +16,36 @@ public class CheckOfferAcceptCommand implements Command {
         String button = req.getParameter("btn");
         var serviceFactory = ServiceFactory.getInstance();
         var offerService = serviceFactory.getOfferService();
-        Integer id;
-        if (Objects.nonNull(button)) {
+        var personService = serviceFactory.getPersonService();
+        Person person = (Person) req.getSession().getAttribute("person");
+        Double money = person.getFunds();
+        int id = Integer.parseInt(req.getParameter("offer_id"));
+        int offer_id;
             try {
                 if (button.equals("accept")) {
-                    id = Integer.parseInt(req.getParameter("person_id"));
-                    Offer offer = offerService.getOfferById(id);
-                    String name = offer.getName();
+                    offer_id = Integer.parseInt(req.getParameter("offer_id"));
+                    Offer offer = offerService.getOfferById(offer_id);
+                    req.getSession().setAttribute("offer_id", offer_id);
+
+                    if(offerService.hasPlan(offer_id, person.getId())){
+                        resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/offerListPerson");
+                        return;
+                    }
+
+
+                    if(person.getFunds() > offer.getPrice()){
+                    offerService.addOfferToPlan(offer.getId(), person.getId());
+                    person.setFunds(person.getFunds() - offer.getPrice());
+                    personService.update(person);
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/personPage");
+                    return;
+                }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
         CommandUtil.goToPage(req, resp, "/WEB-INF/view/checkOfferAccept.jsp");
     }
 }

@@ -18,19 +18,12 @@ public class PersonPageCommand implements Command {
 
         var factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();
-
         String button = req.getParameter("button");
 
-        try {
-            Integer id = Integer.parseInt(req.getParameter("id"));
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
             List<Offer> offers = offerService.getAllOffersById(person.getId());
-
             req.setAttribute("offers", offers);
 
             CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");
         }
     }
-}
+

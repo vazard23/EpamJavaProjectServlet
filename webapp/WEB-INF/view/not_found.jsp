@@ -1,11 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DIO
-  Date: 15.06.2022
-  Time: 13:21
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:set var="language" value="${not empty param.language ? param.language : pageContext.request.locale}"
+       scope="application"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
+
 <html>
 <head>
     <title>Not Found 404</title>

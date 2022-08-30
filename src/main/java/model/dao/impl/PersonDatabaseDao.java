@@ -132,7 +132,30 @@ public class PersonDatabaseDao implements PersonDao {
 
     @Override
     public Person getByLogin(String login) {
-        return null;
+        try (Connection connection = Connector.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.SELECT_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+
+            Person person = null;
+
+            if (resultSet.next()) {
+                person = new Person.PersonBuilderImpl()
+                        .setId(resultSet.getInt("id"))
+                        .setName(resultSet.getString("name"))
+                        .setEmail(resultSet.getString("e_mail"))
+                        .setLogin(resultSet.getString("login"))
+                        .setPassword(resultSet.getString("password"))
+                        .setAccessLevel(resultSet.getInt("access_level"))
+                        .setFunds(resultSet.getDouble("funds"))
+                        .setBlockedStatus(resultSet.getInt("blocked_status"))
+                        .setRole(resultSet.getInt("role_id"))
+                        .build();
+            }
+            return person;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot getByLoginAndPass person", e);
+        }
     }
 
     @Override
@@ -145,5 +168,4 @@ public class PersonDatabaseDao implements PersonDao {
         }
         return count;
     }
-
 }

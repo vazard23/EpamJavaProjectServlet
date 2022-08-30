@@ -7,39 +7,36 @@ import model.entity.Offer;
 import model.exception.DataBaseException;
 
 import javax.naming.NamingException;
-import java.awt.print.Book;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class OfferDatabaseDao implements OfferDao {
     @Override
     public List<Offer> getAllOffersById(int person_id) {
         try (Connection connection = Connector.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(Constants.ALL_OFFERS_BY_PERSON_ID)) {
+             PreparedStatement statement = connection.prepareStatement(Constants.ALL_PLANS_BY_PERSON_ID)) {
             statement.setInt(1, person_id);
             ResultSet resultSet = statement.executeQuery();
             List<Integer> id_list = new ArrayList<>();
             List<Offer> offers = new ArrayList<Offer>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 id_list.add(resultSet.getInt(4));
             }
-//TODO rename constant to all plans by id, figure out how to change prepared statement int from an array
+//TODO rename constant to all plans by id, split into methods
             PreparedStatement stmt = connection.prepareStatement(Constants.SELECT_BY_ID_OFFER);
 
 
             for (Integer integer : id_list) {
                 stmt.setInt(1, integer);
                 ResultSet rs = stmt.executeQuery();
-                while(rs.next()) {
+                while (rs.next()) {
                     offers.add(offerBuild(rs));
                 }
             }
-
 
 
             return offers;
@@ -50,7 +47,20 @@ public class OfferDatabaseDao implements OfferDao {
 
     @Override
     public boolean add(Offer entity) throws DataBaseException, SQLException, NamingException {
-        return false;
+        try (Connection connection = Connector.getInstance().getConnection()) {
+            connection.setAutoCommit(false);
+            PreparedStatement statement = connection.prepareStatement(Constants.INSERT_OFFER);
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getDescription());
+            statement.setDouble(3, entity.getPrice());
+            statement.setInt(4, entity.getCategory_id());
+            statement.execute();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new NamingException();
+        }
     }
 
     @Override
@@ -75,12 +85,32 @@ public class OfferDatabaseDao implements OfferDao {
 
     @Override
     public boolean deleteEntity(Integer id) throws NamingException, SQLException {
-        return false;
+        try (Connection con = Connector.getInstance().getConnection();
+             PreparedStatement statement = con.prepareStatement(Constants.DELETE_OFFER)) {
+            con.setAutoCommit(false);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            con.commit();
+            return true;
+        }
     }
 
     @Override
     public Offer updateEntity(Offer entity) {
-        return null;
+        try (Connection con = Connector.getInstance().getConnection();
+             PreparedStatement statement = con.prepareStatement(Constants.UPDATE_OFFER)) {
+            con.setAutoCommit(false);
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getDescription());
+            statement.setDouble(3, entity.getPrice());
+            statement.setInt(4, entity.getCategory_id());
+            statement.setInt(5, entity.getId());
+            statement.executeUpdate();
+            con.commit();
+            return entity;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot update offer ", e);
+        }
     }
 
 
@@ -98,7 +128,23 @@ public class OfferDatabaseDao implements OfferDao {
             offers = initOffer(rs);
             return offers;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getAllEntity book", e);
+            throw new RuntimeException("Cannot getAllEntity offer", e);
+        }
+    }
+
+    @Override
+    public boolean addOfferToPlan(int offer_id, int person_id) {
+        try (Connection connection = Connector.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.ATTACH_PLAN_TO_USER)) {
+            connection.setAutoCommit(false);
+            statement.setInt(1, 1);
+            statement.setInt(2, person_id);
+            statement.setInt(3, offer_id);
+            statement.execute();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot add offer to plan table");
         }
     }
 
@@ -116,7 +162,7 @@ public class OfferDatabaseDao implements OfferDao {
         return offers;
     }
 
-    private Offer offerBuild(ResultSet rs) throws SQLException{
+    private Offer offerBuild(ResultSet rs) throws SQLException {
         Offer offer = new Offer();
         offer.setId(rs.getInt(1));
         offer.setName(rs.getString(2));
@@ -127,17 +173,45 @@ public class OfferDatabaseDao implements OfferDao {
         return offer;
     }
 
-    private List<Integer> getPlanId(int person_id) throws SQLException{
+    private List<Integer> getPlanId(int person_id) throws SQLException {
         Connection connection = Connector.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(Constants.ALL_OFFERS_BY_PERSON_ID); {
+        PreparedStatement statement = connection.prepareStatement(Constants.ALL_PLANS_BY_PERSON_ID);
+        {
             statement.setInt(1, person_id);
             ResultSet resultSet = statement.executeQuery();
             List<Integer> id_list = new ArrayList<>();
             List<Offer> offers = new ArrayList<Offer>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 id_list.add(resultSet.getInt(4));
             }
             return id_list;
+        }
     }
-}
+
+    public boolean hasPlan(int offer_id, int person_id) {
+        try {
+            List<Integer> plans = getPlanId(person_id);
+            if (plans.contains(offer_id)) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean planDelete(int offer_id) {
+        try (Connection connection = Connector.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.DELETE_PLANS)) {
+            connection.setAutoCommit(false);
+            statement.setInt(1, offer_id);
+            statement.execute();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

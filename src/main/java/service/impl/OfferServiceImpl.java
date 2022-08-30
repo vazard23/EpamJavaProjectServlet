@@ -24,39 +24,20 @@ import java.util.stream.Collectors;
 
 public class OfferServiceImpl implements OfferService {
 
-
-
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private OfferDao offerDao = daoFactory.getOfferDao();
     private PersonDao personDao = daoFactory.getPersonDAO();
 
-    @Override
-    public List<Offer> findByOfferName(String text) {
-        return null;
-    }
 
     @Override
-    public boolean setUserOffer(int user_id, int offer_id) {
-     //   Offer offer = null;
-      //try {
-           //offer = offerDao.getById(offer_id);
-    //       offer.setPerson_id(person_id);
-        //   offerDao.updateEntity(offer);
-           return true;
-     //  } catch (DataBaseException e) {
-      //    return false;
-     //   }
+    public boolean add(Offer offer) throws DataBaseException, SQLException, NamingException {
+        return offerDao.add(offer);
     }
+
 
     @Override
     public List<Offer> getAll() throws ServiceException {
         return offerDao.getAll();
-    }
-
-    //TODO getUserOffers
-    @Override
-    public List<Offer> getAllOffers() {
-        return null;
     }
 
     @Override
@@ -67,6 +48,31 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer getOfferById(int offer_id) throws DataBaseException {
         return offerDao.getById(offer_id);
+    }
+
+    @Override
+    public boolean addOfferToPlan(int offer_id, int person_id) {
+        return offerDao.addOfferToPlan(offer_id, person_id);
+    }
+
+    @Override
+    public boolean hasPlan(int offer_id, int person_id) {
+        return offerDao.hasPlan(offer_id, person_id);
+    }
+
+    @Override
+    public Offer updateEntity(Offer offer) {
+        return offerDao.updateEntity(offer);
+    }
+
+    @Override
+    public boolean deleteEntity(Integer id) throws NamingException, SQLException {
+        return offerDao.deleteEntity(id);
+    }
+
+    @Override
+    public boolean planDelete(int offer_id) {
+        return offerDao.planDelete(offer_id);
     }
 }
 

@@ -10,4 +10,10 @@ public interface OfferDao extends CrudDao<Integer, Offer> {
     List<Offer> getAll();
 
     List<Offer> getAllOffersById(int person_id);
+
+    boolean addOfferToPlan(int offer_id, int person_id);
+
+    boolean hasPlan(int offer_id, int person_id);
+
+    public boolean planDelete(int offer_id);
 }

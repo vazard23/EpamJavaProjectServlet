@@ -1,5 +1,7 @@
-package controller.command;
+package controller.command.adminPack;
 
+import controller.command.Command;
+import controller.command.RegistrationCommand;
 import controller.command.utils.CommandUtil;
 import controller.command.utils.ValidationData;
 import model.entity.Person;
@@ -14,10 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
+public class AdminUserRegisterCommand implements Command {
 
-public class RegistrationCommand implements Command {
-
-
+    private static Logger logger = Logger.getLogger(AdminUserRegisterCommand.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -27,15 +28,15 @@ public class RegistrationCommand implements Command {
         String password = req.getParameter("password");
         if (Objects.nonNull(email) && Objects.nonNull(password)) {
             try {
-
-               // if (!ValidationData.isEmailValid(email) || !ValidationData.isPasswordValid(password)) {
-             //       throw new WrongDataException();
-              //  }
+                // if (!ValidationData.isEmailValid(email) || !ValidationData.isPasswordValid(password)) {
+                //      throw new WrongDataException();
+                 // }
 
                 PersonService personService = factory.getPersonService();
 
                 String name = req.getParameter("name");
                 String login = req.getParameter("login");
+                Integer category = Integer.parseInt(req.getParameter("category"));
 
                 var person = personService.getByLogin(login);
 
@@ -48,31 +49,29 @@ public class RegistrationCommand implements Command {
                             .setEmail(email)
                             .build();
                     var encrypt = CommandUtil.encrypt(password);
-                    person.setPassword(encrypt.orElseThrow(() -> new Exception()));
-                    person.setAccessLevel(2);
+                    person.setPassword(encrypt.orElseThrow(Exception::new));
+                    person.setAccessLevel(category);
                     person.setStatus(1);
                     personService.add(person);
-
-                    req.getSession().setAttribute("person", person);
-
-                    String page = CommandUtil.getPersonPageByRole(person.getAccessLevel());
-
-                    CommandUtil.goToPage(req, resp, page);
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
+                    return;
                 }
             } catch (ServiceException e) {
-
+                logger.error(e.getMessage());
                 req.setAttribute("notFound", true);
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/registration.jsp");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
             } catch (WrongDataException e) {
                 req.setAttribute("wrongData", true);
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/registration.jsp");
+                logger.error("Incorrect login or password");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
             } catch (AlreadyExistPersonException e) {
                 req.setAttribute("alreadyExist", true);
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/registration.jsp");
+                logger.error("person already exist");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/registration.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
     }
 }

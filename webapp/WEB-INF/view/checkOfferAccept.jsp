@@ -1,28 +1,32 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DIO
-  Date: 26.08.2022
-  Time: 12:31
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:set var="language" value="${not empty param.language ? param.language : pageContext.request.locale}"
+       scope="application"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
+
+
 <html>
 <head>
     <title>Accept Offer</title>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/view/checkOfferAccept" method="post">
-  <div class="float">
-    <label for="checkbox" name="checkbox" id="checkbox-label">
-      <input type="checkbox" name="checkbox" id="checkbox">
-      <p>I approve to top up this user account</p>
-    </label>
-  </div>
-
+    <h1>Do you really want to accept this offer?</h1>
+    <h1>This action means that money will be charged from your account</h1>
   <a href=${pageContext.request.contextPath}/view/checkOfferAccept>
   <button name="btn" value="accept">Accept</button>
-</a>
-  <input type="hidden" name="person_id" value="${param.id}">
+  </a>
+  <input type="hidden" name="offer_id" value="${param.id}">
+
+    <c:if test="${requestScope.hasPlan}">
+        <div class="w3-container">
+            <fmt:message key="hasPlan"/>
+        </div>
+    </c:if>
 
 </form>
 <script src="${pageContext.request.contextPath}/WEB-INF/js/checkbox.js"></script>

@@ -39,25 +39,10 @@ public abstract class CommandUtil {
     }
 
     public static String getPersonPageByRole(int accessLevel) {
-//        String page = "";
-//        switch (accessLevel) {
-//            case 1:
-//                page = "/view/mainPage";
-//                break;
-//            case 2:
-//                page = "/view/personPage";
-//                break;
-//            case 3:
-//                page = "/view/admin/adminPage";
-//                break;
-//            default:
-//        }
-//        return page;
-//
         return switch (accessLevel) {
             case 1 -> "/view/mainPage";
             case 2 -> "/view/personPage";
-            case 3 -> "/view/admin/adminPage";
+            case 3 -> "/view/adminPage";
             default -> "";
         };
     }
