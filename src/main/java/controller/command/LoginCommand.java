@@ -10,12 +10,19 @@ import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginCommand implements Command{
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         ServiceFactory factory = ServiceFactory.getInstance();
+        var offerService = factory.getOfferService();
+
+        Long currentTime = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(currentTime);
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -26,6 +33,16 @@ public class LoginCommand implements Command{
             try {
                 var encrypt = CommandUtil.encrypt(password);
                 Person person = personService.getByLoginAndPass(login, encrypt.orElseThrow(Exception::new));
+
+                List<Timestamp> timeList = offerService.getPlanTime(person.getId());
+                for (Timestamp t: timeList)
+                {
+                    if(t.after(timestamp)){
+                        person.setStatus(2);
+                        personService.update(person);
+
+                    }
+                }
 
                 if (person.getStatus() == 1) {
                     req.getSession().setAttribute("person", person);

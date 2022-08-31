@@ -19,8 +19,6 @@ import java.util.Objects;
 public class AdminOfferChangeCommand implements Command {
 
     private static Logger logger = Logger.getLogger(AdminOfferChangeCommand.class);
-
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         logger.info("in offer change command");

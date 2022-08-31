@@ -7,10 +7,7 @@ import model.entity.Offer;
 import model.exception.DataBaseException;
 
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,12 +131,15 @@ public class OfferDatabaseDao implements OfferDao {
 
     @Override
     public boolean addOfferToPlan(int offer_id, int person_id) {
+        Long currentTime = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(currentTime);
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ATTACH_PLAN_TO_USER)) {
             connection.setAutoCommit(false);
             statement.setInt(1, 1);
             statement.setInt(2, person_id);
             statement.setInt(3, offer_id);
+            statement.setTimestamp(4, timestamp);
             statement.execute();
             connection.commit();
             return true;
@@ -213,5 +213,22 @@ public class OfferDatabaseDao implements OfferDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Timestamp> getPlanTime(int person_id) {
+        List<Timestamp> list = new ArrayList<>();
+        try (Connection connection = Connector.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(Constants.PLAN_GET_TIME))
+        {
+            statement.setInt(1, person_id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                list.add(resultSet.getTimestamp(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

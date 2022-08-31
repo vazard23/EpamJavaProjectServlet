@@ -6,6 +6,7 @@ import model.exception.ServiceException;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface OfferService {
@@ -27,5 +28,7 @@ public interface OfferService {
     public boolean deleteEntity(Integer id) throws NamingException, SQLException;
 
     public boolean planDelete(int offer_id);
+
+    public List<Timestamp> getPlanTime(int person_id);
 
 }

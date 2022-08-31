@@ -15,9 +15,10 @@ public final class Constants {
     public static final String DELETE_OFFER = "DELETE FROM offers WHERE ID = ?";
 
     //Plan constants
-    public static final String ATTACH_PLAN_TO_USER = "INSERT INTO plan (status_id, person_id, offer_id) VALUES (?,?,?)";
+    public static final String ATTACH_PLAN_TO_USER = "INSERT INTO plan (status_id, person_id, offer_id, date_accept) VALUES (?,?,?,?)";
     public static final String ALL_PLANS_BY_PERSON_ID = "SELECT * FROM plan WHERE person_id = ?";
     public static final String DELETE_PLANS = "DELETE FROM plan WHERE offer_id = ?";
+    public static final String PLAN_GET_TIME = "SELECT date_accept FROM plan WHERE person_id = ?";
 
 
     //Selecting constants

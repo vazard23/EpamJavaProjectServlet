@@ -16,6 +16,7 @@ import service.OfferService;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,11 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public boolean planDelete(int offer_id) {
         return offerDao.planDelete(offer_id);
+    }
+
+    @Override
+    public List<Timestamp> getPlanTime(int person_id) {
+        return offerDao.getPlanTime(person_id);
     }
 }
 

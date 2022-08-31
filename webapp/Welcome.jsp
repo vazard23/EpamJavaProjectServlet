@@ -10,16 +10,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
     <title>Welcome!</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/welcomeStyle.css">
 </head>
-
 <body>
-Welcome to the site!
-
-<a href=${pageContext.request.contextPath}/view/mainPage>
-    <button>Enter site!</button>
-</a>
-
+<div class="hero">
+    <img src="${pageContext.request.contextPath}/images/welcome_bg.png" class="background">
+    <div class="content">
+        <h1>Providers life</h1>
+        <a href="${pageContext.request.contextPath}/view/mainPage">Explore</a>
+    </div>
+</div>
 </body>
 </html>
-
 

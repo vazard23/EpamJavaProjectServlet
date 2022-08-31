@@ -31,5 +31,9 @@
     <button><fmt:message key="adminUserPage_button"/></button>
 </a>
 
+<a href=${pageContext.request.contextPath}/view/logout>
+    <button><fmt:message key="logout_button"/> </button>
+</a>
+
 </body>
 </html>

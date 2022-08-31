@@ -31,7 +31,7 @@
 </form>
 <script src="${pageContext.request.contextPath}/WEB-INF/js/checkbox.js"></script>
 
-<a href=${pageContext.request.contextPath}/view/adminPage>
+<a href=${pageContext.request.contextPath}/view/personPage>
     <button name="home"><fmt:message key="adminPage_button"/></button>
 </a>
 </body>

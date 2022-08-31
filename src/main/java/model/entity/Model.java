@@ -1,6 +1,8 @@
 package model.entity;
 
-public abstract class Model {
+import java.io.Serializable;
+
+public abstract class Model implements Serializable {
     private int id;
 
     public Model() {

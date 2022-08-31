@@ -65,7 +65,7 @@
         <tr>
             <td>
                 <label>
-                    <input type="text"
+                    <input type="text" required
                            placeholder=Name
                            name="offer_name">
                 </label>
@@ -73,7 +73,7 @@
 
             <td>
                 <label>
-                    <input type="text"
+                    <input type="text" required
                            placeholder=Description
                            name="offer_desc">
                 </label>
@@ -81,7 +81,7 @@
 
             <td>
                 <label>
-                    <input type="number" min="0" max="5000"
+                    <input type="number" min="0" max="5000" required
                            placeholder=Price
                            name="offer_price">
                 </label>
@@ -102,9 +102,6 @@
         <button name="change"><fmt:message key="adminChange_button"/></button>
     </a>
 
-    <a href=${pageContext.request.contextPath}/view/offerChangeForm>
-        <button name="remove"><fmt:message key="adminRemove_button"/></button>
-    </a>
 
     <c:if test="${requestScope.notFullInput}">
         <div class="w3-container">

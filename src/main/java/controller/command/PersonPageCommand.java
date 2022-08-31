@@ -7,6 +7,9 @@ import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PersonPageCommand implements Command {
@@ -18,12 +21,19 @@ public class PersonPageCommand implements Command {
 
         var factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();
-        String button = req.getParameter("button");
 
             List<Offer> offers = offerService.getAllOffersById(person.getId());
-            req.setAttribute("offers", offers);
+            if(offers.size() == 0){
+                req.setAttribute("offerList_Empty", true);
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");
+                return;
+            }
 
-            CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");
-        }
+        Calendar calendar = Calendar.getInstance();
+            int day = Calendar.DAY_OF_MONTH;
+        req.setAttribute("offerList_notEmpty", true);
+        req.setAttribute("offers", offers);
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");
+    }
     }
 
