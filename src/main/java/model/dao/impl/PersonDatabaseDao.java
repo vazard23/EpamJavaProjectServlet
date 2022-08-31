@@ -56,12 +56,14 @@ public class PersonDatabaseDao implements PersonDao {
             resultSet.next();
 
             return new Person.PersonBuilderImpl()
-                    .setId(id)
+                    .setId(resultSet.getInt("id"))
                     .setName(resultSet.getString("name"))
-                    .setEmail(resultSet.getString("email"))
+                    .setEmail(resultSet.getString("e_mail"))
                     .setLogin(resultSet.getString("login"))
                     .setPassword(resultSet.getString("password"))
-                    .setAccessLevel(resultSet.getInt("level"))
+                    .setAccessLevel(resultSet.getInt("access_level"))
+                    .setFunds(resultSet.getDouble("funds"))
+                    .setBlockedStatus(resultSet.getInt("blocked_status"))
                     .setRole(resultSet.getInt("role_id"))
                     .build();
         } catch (SQLException e) {
@@ -98,7 +100,26 @@ public class PersonDatabaseDao implements PersonDao {
 
     @Override
     public List<Person> getAll() {
-        return null;
+        List<Person> outerPeople = new ArrayList<>();
+        try (Connection connection = Connector.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.ALL_PERSONS)) {
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Person person = new Person();
+                person.setId(rs.getInt(1));
+                person.setName(rs.getString(2));
+                person.setLogin(rs.getString(3));
+                person.setPassword(rs.getString(4));
+                person.setEmail(rs.getString(5));
+                person.setAccessLevel(rs.getInt(6));
+                person.setFunds(rs.getDouble(7));
+                person.setStatus(rs.getInt(8));
+                outerPeople.add(person);
+            }
+            return outerPeople;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot getAllPerson", e);
+        }
     }
 
     @Override

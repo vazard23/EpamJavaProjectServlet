@@ -8,9 +8,9 @@ public class Person extends Model {
     private String password;
     private String login;
     private String email;
-    private int access_level;
+    private int accessLevel;
     private double funds;
-    private int blocked_status;
+    private int blockedStatus;
 
     private Person(PersonBuilderImpl builder){
         super(builder.id);
@@ -19,9 +19,9 @@ public class Person extends Model {
         this.password = builder.password;
         this.login = builder.login;
         this.email = builder.email;
-        this.access_level = builder.access_level;
+        this.accessLevel = builder.access_level;
         this.funds = builder.funds;
-        this.blocked_status = builder.blocked_status;
+        this.blockedStatus = builder.blocked_status;
     }
 
     public static class PersonBuilderImpl implements PersonBuilder{
@@ -123,17 +123,17 @@ public class Person extends Model {
     }
 
     public int getAccessLevel() {
-        return access_level;
+        return accessLevel;
     }
 
-    public void setAccessLevel(int accessLevel) {this.access_level = accessLevel;}
+    public void setAccessLevel(int accessLevel) {this.accessLevel = accessLevel;}
 
     public int getStatus() {
-        return blocked_status;
+        return blockedStatus;
     }
 
     public void setStatus(int status) {
-        this.blocked_status = status;
+        this.blockedStatus = status;
     }
 
     public void setFunds(double funds){ this.funds = funds;}

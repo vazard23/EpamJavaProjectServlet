@@ -21,21 +21,12 @@ public class AdminOfferChangeFormCommand implements Command {
         String remove = req.getParameter("remove");
         Offer offer = (Offer) req.getSession().getAttribute("offer");
 
-        if (Objects.nonNull(remove)) {
-                try {
-                    offerService.planDelete(offer.getId());
-                    offerService.deleteEntity(offer.getId());
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
-                    return;
-                } catch (NamingException | SQLException | IOException e) {
-                    e.printStackTrace();
-                }
-        }
+
         if (Objects.nonNull(change)) {
-            if (Objects.nonNull(req.getParameter("offer_name"))
-                    && Objects.nonNull(req.getParameter("offer_desc"))
-                    && Objects.nonNull(req.getParameter("offer_price"))
-                    && Objects.nonNull(req.getParameter("categories"))) {
+            if (Objects.equals(req.getParameter("offer_name"), " ")
+                    && Objects.equals(req.getParameter("offer_desc"), " ")
+                    && Objects.equals(req.getParameter("offer_price"), " ")
+                    && Objects.equals(req.getParameter("categories"), " ")) {
                 String name = req.getParameter("offer_name");
                 String description = req.getParameter("offer_desc");
                 Double price = Double.valueOf(req.getParameter("offer_price"));
@@ -55,6 +46,10 @@ public class AdminOfferChangeFormCommand implements Command {
                     e.printStackTrace();
                 }
 
+            } else {
+                req.setAttribute("notFullInput", true);
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerChangeForm.jsp");
+                return;
             }
         }
         CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerChangeForm.jsp");

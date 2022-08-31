@@ -25,6 +25,7 @@
         <th><fmt:message key="offerPrice_table"/></th>
         <th><fmt:message key="offerCategory_table"/></th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -35,12 +36,22 @@
             <td>${a.price}₴</td>
             <td>${a.category_id}</td>
             <td>
-                <a href=${pageContext.request.contextPath}/view/adminChangeOffer?offer_id=${a.id}&button=change><fmt:message key="changeButton_table"/> </a>
+                <a href=${pageContext.request.contextPath}/view/adminChangeOffer?offer_id=${a.id}&button=change><fmt:message
+                        key="changeButton_table"/> </a>
+                <input type="hidden" name="offer_id" value="${a.id}">
+            </td>
+            <td>
+                <a href=${pageContext.request.contextPath}/view/offerDelete?offer_id=${a.id}&button=remove><fmt:message
+                        key="adminRemove_button"/> </a>
                 <input type="hidden" name="offer_id" value="${a.id}">
             </td>
         </tr>
     </c:forEach>
     </tbody>
+
+    <a href=${pageContext.request.contextPath}/view/adminPage>
+        <button><fmt:message key="adminPage_button"/></button>
+    </a>
 </table>
 </body>
 </html>

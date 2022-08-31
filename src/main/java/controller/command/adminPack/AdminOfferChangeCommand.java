@@ -8,10 +8,13 @@ import model.exception.ServiceException;
 import org.apache.log4j.Logger;
 import service.factory.ServiceFactory;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 public class AdminOfferChangeCommand implements Command {
 
@@ -23,7 +26,7 @@ public class AdminOfferChangeCommand implements Command {
         logger.info("in offer change command");
         var serviceFactory = ServiceFactory.getInstance();
         var offerService = serviceFactory.getOfferService();
-        String button = req.getParameter("btn");
+
 
         List<Offer> offers = null;
         try {

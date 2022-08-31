@@ -1,6 +1,7 @@
 package service;
 
 import model.entity.Person;
+import model.exception.DataBaseException;
 import model.exception.NotFoundPersonException;
 import model.exception.ServiceException;
 import model.exception.WrongDataException;
@@ -16,5 +17,7 @@ public interface PersonService extends ItemService<Integer, Person> {
     int getAllBlocked();
 
     List<Person> getAllPerson() throws ServiceException;
+
+    Person getById(int id) throws DataBaseException;
 }
 

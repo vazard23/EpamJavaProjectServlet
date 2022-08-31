@@ -27,5 +27,9 @@
     <button><fmt:message key="adminChange_button"/></button>
 </a>
 
+<a href=${pageContext.request.contextPath}/view/adminUserPage>
+    <button><fmt:message key="adminUserPage_button"/></button>
+</a>
+
 </body>
 </html>

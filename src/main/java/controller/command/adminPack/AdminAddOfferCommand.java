@@ -28,32 +28,22 @@ public class AdminAddOfferCommand implements Command {
             String name = req.getParameter("offer_name");
             String description = req.getParameter("offer_desc");
             double price = Double.parseDouble(req.getParameter("offer_price"));
-            String category = req.getParameter("offer_category");
 
-            if (Objects.nonNull(name) && Objects.nonNull(description) && Objects.nonNull(category)) {
-                switch (category) {
-                    case ("TV") -> category_id = 1;
-                    case ("Web") -> category_id = 2;
-                    case ("Phone") -> category_id = 3;
-                }
-
-
+            if (Objects.nonNull(name) && Objects.nonNull(description)) {
+                int category = Integer.parseInt(req.getParameter("categories"));
                 Offer offer = new Offer.OfferBuilderImpl()
                         .setName(name)
                         .setDescription(description)
                         .setPrice(price)
-                        .setCategoryId(category_id)
+                        .setCategoryId(category)
                         .build();
-
-
                 try {
                     List<String> names = offerService.getAll().stream().map(Offer::getName).toList();
-                    if(!names.contains(offer.getName())) {
+                    if (!names.contains(offer.getName())) {
                         offerService.add(offer);
                         resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
                         return;
-                    }
-                    else {
+                    } else {
                         req.setAttribute("name_exists", true);
                         CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddOffer.jsp");
                     }

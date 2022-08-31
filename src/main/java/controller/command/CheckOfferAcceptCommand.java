@@ -19,21 +19,20 @@ public class CheckOfferAcceptCommand implements Command {
         var personService = serviceFactory.getPersonService();
         Person person = (Person) req.getSession().getAttribute("person");
         Double money = person.getFunds();
-        int id = Integer.parseInt(req.getParameter("offer_id"));
         int offer_id;
-            try {
-                if (button.equals("accept")) {
-                    offer_id = Integer.parseInt(req.getParameter("offer_id"));
-                    Offer offer = offerService.getOfferById(offer_id);
-                    req.getSession().setAttribute("offer_id", offer_id);
+        try {
+            if (button.equals("accept")) {
+                offer_id = Integer.parseInt(req.getParameter("offer_id"));
+                Offer offer = offerService.getOfferById(offer_id);
+                req.getSession().setAttribute("offer_id", offer_id);
 
-                    if(offerService.hasPlan(offer_id, person.getId())){
-                        resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/offerListPerson");
-                        return;
-                    }
+                if(offerService.hasPlan(offer_id, person.getId())){
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/offerListPerson");
+                    return;
+                }
 
 
-                    if(person.getFunds() > offer.getPrice()){
+                if(person.getFunds() > offer.getPrice()){
                     offerService.addOfferToPlan(offer.getId(), person.getId());
                     person.setFunds(person.getFunds() - offer.getPrice());
                     personService.update(person);
@@ -41,10 +40,10 @@ public class CheckOfferAcceptCommand implements Command {
                     return;
                 }
 
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         CommandUtil.goToPage(req, resp, "/WEB-INF/view/checkOfferAccept.jsp");
     }

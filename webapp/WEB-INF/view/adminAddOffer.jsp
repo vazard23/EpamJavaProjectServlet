@@ -18,17 +18,15 @@
     </style>
 </head>
 <body>
-
 <form action="${pageContext.request.contextPath}/view/addOffer" method="post">
-Offer add form
-
+<fmt:message key="offerAddForm"/>
 <table class="tableService sortable">
     <thead>
     <tr>
-        <th>Name of the offer</th>
-        <th>Description</th>
-        <th>Price in UAH</th>
-        <th>Category of offer
+        <th><fmt:message key="offerName_table"/></th>
+        <th><fmt:message key="offerDesc_table"/></th>
+        <th><fmt:message key="offerPrice_table"/></th>
+        <th><fmt:message key="offerCategory_table"/></th>
     </tr>
     </thead>
     <tbody>
@@ -58,11 +56,12 @@ Offer add form
         </td>
 
         <td>
-            <label>
-                <input type="text" required
-                       placeholder=Category
-                       name="offer_category">
-            </label>
+            <label for="category"></label>
+            <select id="category" name="categories">
+                <option value="1">Web</option>
+                <option value="2">TV</option>
+                <option value="3">Phone</option>
+            </select>
         </td>
     </tr>
     </tbody>
@@ -77,7 +76,11 @@ Offer add form
             <fmt:message key="name_exists"/>
         </div>
     </c:if>
-
 </form>
+
+<a href=${pageContext.request.contextPath}/view/adminPage>
+    <button name="home"><fmt:message key="adminPage_button"/></button>
+</a>
+
 </body>
 </html>

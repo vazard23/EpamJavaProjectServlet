@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 
 public class PersonServiceImpl implements PersonService {
 
-
-
     private final DaoFactory daoFactory = DaoFactory.getInstance();
     private PersonDao personDao = daoFactory.getPersonDAO();
 
@@ -81,12 +79,7 @@ public class PersonServiceImpl implements PersonService {
         return null;
     }
 
-    /**
-     * If book name or author contains text
-     * print this book
-     *
-     * @return All person which has accessLevel = 2
-     */
+
     @Override
     public List<Person> getAllPerson() throws ServiceException {
         List<Person> all = personDao.getAll();
@@ -94,6 +87,11 @@ public class PersonServiceImpl implements PersonService {
         return all.stream()
                 .filter(p -> p.getAccessLevel() == 2)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Person getById(int id) throws DataBaseException {
+        return personDao.getById(id);
     }
 
 

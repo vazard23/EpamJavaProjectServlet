@@ -36,7 +36,7 @@ public class AdminUserRegisterCommand implements Command {
 
                 String name = req.getParameter("name");
                 String login = req.getParameter("login");
-                Integer category = Integer.parseInt(req.getParameter("category"));
+                int category = Integer.parseInt(req.getParameter("categories"));
 
                 var person = personService.getByLogin(login);
 

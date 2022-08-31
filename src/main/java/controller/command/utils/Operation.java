@@ -14,4 +14,6 @@ public interface Operation {
     String ADD_NEW_PERSON = "/view/addPerson";
     String ADMIN_CHANGE_OFFER = "/view/adminChangeOffer";
     String ADMIN_CHANGE_OFFER_FORM = "/view/offerChangeForm";
+    String ADMIN_OFFER_DELETE = "/view/offerDelete";
+    String ADMIN_USER_PAGE = "/view/adminUserPage";
 }
