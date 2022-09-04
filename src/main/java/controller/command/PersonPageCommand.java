@@ -29,8 +29,6 @@ public class PersonPageCommand implements Command {
                 return;
             }
 
-        Calendar calendar = Calendar.getInstance();
-            int day = Calendar.DAY_OF_MONTH;
         req.setAttribute("offerList_notEmpty", true);
         req.setAttribute("offers", offers);
         CommandUtil.goToPage(req, resp, "/WEB-INF/view/personPage.jsp");

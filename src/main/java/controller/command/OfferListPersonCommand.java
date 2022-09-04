@@ -4,6 +4,7 @@ import controller.command.factory.CommandFactory;
 import controller.command.utils.CommandUtil;
 import model.entity.Offer;
 import model.entity.Person;
+import model.exception.DataBaseException;
 import model.exception.ServiceException;
 import service.factory.ServiceFactory;
 
@@ -25,7 +26,19 @@ public class OfferListPersonCommand implements Command{
         if(Objects.nonNull(offer_id)) {
             if (offerService.hasPlan(offer_id, person.getId())) {
                 req.setAttribute("hasPlan", true);
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerListPerson.jsp");
             }
+
+            try {
+                if(offerService.getOfferById(offer_id).getPrice() > person.getFunds()){
+                    req.setAttribute("notEnoughMoney", true);
+                    CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerListPerson.jsp");
+                }
+            } catch (DataBaseException e) {
+                e.printStackTrace();
+            }
+
+
         }
         try {
             List<Offer> offers = offerService.getAll();

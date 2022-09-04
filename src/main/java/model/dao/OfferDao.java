@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface OfferDao extends CrudDao<Integer, Offer> {
-    List<Offer> getAllFree();
 
     List<Offer> getAll();
 

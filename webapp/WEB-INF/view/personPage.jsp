@@ -47,6 +47,7 @@
     </a>
 </form>
 <c:if test="${requestScope.offerList_notEmpty}">
+    <fmt:message key="offerList_Empty"/>
     <div class="w3-container">
         <table class="tableService sortable" id = "sortTable" data-filter-control="false" data-show-search-clear-button="false">>
             <thead>
@@ -85,7 +86,8 @@
     </div>
 </c:if>
 
-<c:if test="${requestScope.offerList_notEmpty}">
+<c:if test="${requestScope.offerList_Empty}">
+    <fmt:message key="offerList_notEmpty"/>
 </c:if>
 
 </body>

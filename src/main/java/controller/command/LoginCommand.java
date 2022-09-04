@@ -1,6 +1,7 @@
 package controller.command;
 
 import controller.command.utils.CommandUtil;
+import model.entity.Offer;
 import model.entity.Person;
 import model.exception.NotFoundPersonException;
 import model.exception.WrongDataException;
@@ -11,6 +12,7 @@ import service.factory.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +23,6 @@ public class LoginCommand implements Command{
         ServiceFactory factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();
 
-        Long currentTime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(currentTime);
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -35,12 +35,15 @@ public class LoginCommand implements Command{
                 Person person = personService.getByLoginAndPass(login, encrypt.orElseThrow(Exception::new));
 
                 List<Timestamp> timeList = offerService.getPlanTime(person.getId());
+                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                List<Offer> debtOffers = new ArrayList<>();
+
                 for (Timestamp t: timeList)
                 {
-                    if(t.after(timestamp)){
+                    if(currentTime.after(t)){
                         person.setStatus(2);
                         personService.update(person);
-
+                        resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/blockedPage");
                     }
                 }
 
@@ -49,9 +52,12 @@ public class LoginCommand implements Command{
 
                     String page = CommandUtil.getPersonPageByRole(person.getAccessLevel());
 
-                    CommandUtil.goToPage(req, resp, page);
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded" + page);
+                    return;
+                    //CommandUtil.goToPage(req, resp, page);
                 } else {
                     req.setAttribute("errorMessage", true);
+                    CommandUtil.goToPage(req, resp, "/WEB-INF/view/login.jsp");
                 }
 
             } catch (NotFoundPersonException e) {

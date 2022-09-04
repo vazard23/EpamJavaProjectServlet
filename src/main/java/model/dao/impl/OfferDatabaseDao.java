@@ -25,8 +25,6 @@ public class OfferDatabaseDao implements OfferDao {
             }
 //TODO rename constant to all plans by id, split into methods
             PreparedStatement stmt = connection.prepareStatement(Constants.SELECT_BY_ID_OFFER);
-
-
             for (Integer integer : id_list) {
                 stmt.setInt(1, integer);
                 ResultSet rs = stmt.executeQuery();
@@ -34,8 +32,6 @@ public class OfferDatabaseDao implements OfferDao {
                     offers.add(offerBuild(rs));
                 }
             }
-
-
             return offers;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot getByLoginAndPass person", e);
@@ -76,7 +72,7 @@ public class OfferDatabaseDao implements OfferDao {
                     .setCategoryId(resultSet.getInt("category_id"))
                     .build();
         } catch (SQLException e) {
-            throw new DataBaseException(String.format("Cannot get book by id=%d", id), e);
+            throw new DataBaseException(String.format("Cannot get offer by id=%d", id), e);
         }
     }
 
@@ -110,12 +106,6 @@ public class OfferDatabaseDao implements OfferDao {
         }
     }
 
-
-    @Override
-    public List<Offer> getAllFree() {
-        return null;
-    }
-
     @Override
     public List<Offer> getAll() {
         List<Offer> offers = new ArrayList<>();
@@ -131,15 +121,15 @@ public class OfferDatabaseDao implements OfferDao {
 
     @Override
     public boolean addOfferToPlan(int offer_id, int person_id) {
-        Long currentTime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(currentTime);
+        Long time = System.currentTimeMillis() + Long.parseLong("2592000000");
+        Timestamp afterThirtyDays = new Timestamp(time);
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ATTACH_PLAN_TO_USER)) {
             connection.setAutoCommit(false);
             statement.setInt(1, 1);
             statement.setInt(2, person_id);
             statement.setInt(3, offer_id);
-            statement.setTimestamp(4, timestamp);
+            statement.setTimestamp(4, afterThirtyDays);
             statement.execute();
             connection.commit();
             return true;

@@ -26,11 +26,6 @@ public class CheckOfferAcceptCommand implements Command {
                 Offer offer = offerService.getOfferById(offer_id);
                 req.getSession().setAttribute("offer_id", offer_id);
 
-                if(offerService.hasPlan(offer_id, person.getId())){
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/offerListPerson");
-                    return;
-                }
-
 
                 if(person.getFunds() > offer.getPrice()){
                     offerService.addOfferToPlan(offer.getId(), person.getId());

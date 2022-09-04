@@ -48,5 +48,12 @@
         <fmt:message key="hasPlan"/>
     </div>
 </c:if>
+
+<c:if test="${requestScope.notEnoughMoney}">
+    <div class="w3-container">
+        <fmt:message key="notEnoughMoney"/>
+    </div>
+</c:if>
+
 </body>
 </html>

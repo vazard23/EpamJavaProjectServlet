@@ -28,6 +28,7 @@ public class CommandFactory {
         allKnownCommandMap.put(Operation.ADMIN_CHANGE_OFFER_FORM, new AdminOfferChangeFormCommand());
         allKnownCommandMap.put(Operation.ADMIN_OFFER_DELETE, new AdminOfferDeleteCommand());
         allKnownCommandMap.put(Operation.ADMIN_USER_PAGE, new AdminUserPageCommand());
+        allKnownCommandMap.put(Operation.BLOCKED_PAGE, new BlockedPageCommand());
     }
 
 
