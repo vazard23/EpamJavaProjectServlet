@@ -40,13 +40,13 @@ public class AdminOfferChangeCommand implements Command {
             try {
                 offer = offerService.getOfferById(offer_id);
                 req.getSession().setAttribute("offer", offer);
-                resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/offerChangeForm");
+                resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/offerChangeForm");
                 return;
             } catch (DataBaseException | IOException e) {
                 e.printStackTrace();
             }
         }
 
-        CommandUtil.goToPage(req,resp, "/WEB-INF/view/adminChangeOffer.jsp");
+        CommandUtil.goToPage(req,resp, "/WEB-INF/view/admin/adminChangeOffer.jsp");
     }
 }

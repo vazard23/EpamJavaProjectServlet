@@ -44,9 +44,20 @@
 
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/view/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>BlockFilter</filter-name>
+        <filter-class>controller.filter.BlockedFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>BlockFilter</filter-name>
         <url-pattern>/view/*</url-pattern>
     </filter-mapping>
-    
+
+
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/view/*</url-pattern>

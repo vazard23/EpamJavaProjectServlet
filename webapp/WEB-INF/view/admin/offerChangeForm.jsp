@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/view/offerChangeForm" ;>
+<form action="${pageContext.request.contextPath}/view/admin/offerChangeForm" ;>
     <table class="tableService sortable">
         <thead>
         <tr>
@@ -98,7 +98,7 @@
         </tbody>
     </table>
 
-    <a href=${pageContext.request.contextPath}/view/offerChangeForm>
+    <a href=${pageContext.request.contextPath}/view/admin/offerChangeForm>
         <button name="change"><fmt:message key="adminChange_button"/></button>
     </a>
 

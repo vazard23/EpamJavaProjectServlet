@@ -1,5 +1,7 @@
 package controller.filter;
 
+import controller.command.utils.CommandUtil;
+import model.entity.Person;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -25,6 +27,8 @@ public class AuthorizationFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse resp = (HttpServletResponse) servletResponse;
         final HttpSession session = req.getSession(false);
+
+
         String loginURI = req.getContextPath() + "/view/login";
         String registrationURI = req.getContextPath() + "/view/registration";
 
@@ -39,7 +43,6 @@ public class AuthorizationFilter implements Filter {
         } else {
             req.getRequestDispatcher("/view/mainPage").forward(req, resp);
         }
-
     }
 
     @Override
@@ -47,3 +50,14 @@ public class AuthorizationFilter implements Filter {
 
     }
 }
+//if (loggedIn) {
+//        if(loginRequest){
+//        Person person = (Person) session.getAttribute("person");
+//        String page = CommandUtil.getPersonPageByRole(person.getAccessLevel());
+//        req.getRequestDispatcher(page).forward(req, resp);
+//        }else {
+//        filterChain.doFilter(req, resp);
+//        }
+//        }  else {
+//        req.getRequestDispatcher("/view/mainPage").forward(req, resp);
+//        }

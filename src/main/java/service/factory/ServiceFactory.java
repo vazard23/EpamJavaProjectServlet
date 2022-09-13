@@ -2,8 +2,10 @@ package service.factory;
 
 import service.OfferService;
 import service.PersonService;
+import service.PlanService;
 import service.impl.OfferServiceImpl;
 import service.impl.PersonServiceImpl;
+import service.impl.PlanServiceImpl;
 
 public class ServiceFactory {
 
@@ -12,6 +14,7 @@ public class ServiceFactory {
 
     private PersonService personService = new PersonServiceImpl();
     private OfferService offerService = new OfferServiceImpl();
+    private PlanService planService = new PlanServiceImpl();
 
 
     private static ServiceFactory instance;
@@ -28,7 +31,7 @@ public class ServiceFactory {
 
     }
 
-
+    public PlanService getPlanService() {return planService; }
     public PersonService getPersonService() {
         return personService;
     }

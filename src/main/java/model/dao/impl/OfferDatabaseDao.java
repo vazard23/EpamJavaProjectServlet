@@ -4,6 +4,7 @@ import model.dao.OfferDao;
 import model.dao.connection.Connector;
 import model.dao.constant.Constants;
 import model.entity.Offer;
+import model.entity.Plan;
 import model.exception.DataBaseException;
 
 import javax.naming.NamingException;
@@ -34,7 +35,7 @@ public class OfferDatabaseDao implements OfferDao {
             }
             return offers;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getByLoginAndPass person", e);
+            throw new RuntimeException("Cannot getPlansBuId", e);
         }
     }
 
@@ -170,7 +171,6 @@ public class OfferDatabaseDao implements OfferDao {
             statement.setInt(1, person_id);
             ResultSet resultSet = statement.executeQuery();
             List<Integer> id_list = new ArrayList<>();
-            List<Offer> offers = new ArrayList<Offer>();
             while (resultSet.next()) {
                 id_list.add(resultSet.getInt(4));
             }
@@ -221,4 +221,5 @@ public class OfferDatabaseDao implements OfferDao {
         }
         return list;
     }
+
 }

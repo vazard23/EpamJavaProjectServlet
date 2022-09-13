@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,11 +25,6 @@ public class SecurityFilter implements Filter {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
 
-        final HttpServletRequest req = (HttpServletRequest) servletRequest;
-        final HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        final HttpSession session = req.getSession(false);
-
-
         List<String> adminURI =
                 Stream.of("/EpamJavaProjectServlet_Web_exploded" + Operation.ADMIN_MENU,
                         "/EpamJavaProjectServlet_Web_exploded" + Operation.ADD_NEW_OFFER,
@@ -38,31 +34,37 @@ public class SecurityFilter implements Filter {
                         "/EpamJavaProjectServlet_Web_exploded" + Operation.ADMIN_OFFER_DELETE,
                         "/EpamJavaProjectServlet_Web_exploded" + Operation.ADMIN_USER_PAGE).toList();
 
-        boolean loggedIn = session != null && session.getAttribute("person") != null;
-        boolean adminRequest = adminURI.contains(req.getRequestURI());
+        final HttpServletRequest req = (HttpServletRequest) servletRequest;
+        final HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        final HttpSession session = req.getSession(false);
 
-        if (adminRequest) {
-            if (loggedIn) {
-                Person person = (Person) session.getAttribute("person");
-                boolean isAdmin = person.getAccessLevel() == 3;
-                boolean isUser = person.getAccessLevel() == 2;
+        Person person = (Person) session.getAttribute("person");
 
-                if (isAdmin) {
-                    filterChain.doFilter(req, resp);
-                } else if (isUser && adminURI.contains(req.getRequestURI())) {
-                    req.getRequestDispatcher("/WEB-INF/view/personPage.jsp").forward(req, resp);
-                } else
-                    req.getRequestDispatcher("/view/mainPage").forward(req, resp);
-            } else {
-                req.getRequestDispatcher("/view/mainPage").forward(req, resp);
+        if (Objects.nonNull(person)) {
+            if (person.getAccessLevel() == 3) {
+                filterChain.doFilter(req, resp);
+            }else {
+                req.getRequestDispatcher("/view/personPage").forward(req, resp);
             }
         } else {
-            filterChain.doFilter(req, resp);
+            req.getRequestDispatcher("/view/mainPage").forward(req, resp);
         }
-    }
 
+    }
     @Override
     public void destroy() {
 
     }
 }
+//                if (isAdmin) {
+//                    filterChain.doFilter(req, resp);
+//                } else if (isUser && adminURI.contains(req.getRequestURI())) {
+//                    req.getRequestDispatcher("/WEB-INF/view/personPage.jsp").forward(req, resp);
+//                } else
+//                    req.getRequestDispatcher("/view/mainPage").forward(req, resp);
+//            } else {
+//                req.getRequestDispatcher("/view/mainPage").forward(req, resp);
+//            }
+//        } else {
+//            filterChain.doFilter(req, resp);
+//        }

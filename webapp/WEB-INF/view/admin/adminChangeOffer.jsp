@@ -36,12 +36,12 @@
             <td>${a.price}₴</td>
             <td>${a.category_id}</td>
             <td>
-                <a href=${pageContext.request.contextPath}/view/adminChangeOffer?offer_id=${a.id}&button=change><fmt:message
+                <a href=${pageContext.request.contextPath}/view/admin/adminChangeOffer?offer_id=${a.id}&button=change><fmt:message
                         key="changeButton_table"/> </a>
                 <input type="hidden" name="offer_id" value="${a.id}">
             </td>
             <td>
-                <a href=${pageContext.request.contextPath}/view/offerDelete?offer_id=${a.id}&button=remove><fmt:message
+                <a href=${pageContext.request.contextPath}/view/admin/offerDelete?offer_id=${a.id}&button=remove><fmt:message
                         key="adminRemove_button"/> </a>
                 <input type="hidden" name="offer_id" value="${a.id}">
             </td>
@@ -49,7 +49,7 @@
     </c:forEach>
     </tbody>
 
-    <a href=${pageContext.request.contextPath}/view/adminPage>
+    <a href=${pageContext.request.contextPath}/view/admin/adminPage>
         <button><fmt:message key="adminPage_button"/></button>
     </a>
 </table>

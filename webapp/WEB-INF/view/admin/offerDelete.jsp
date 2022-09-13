@@ -12,11 +12,11 @@
     <title>Deleting offer</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/view/offerDelete" method="post">
+<form action="${pageContext.request.contextPath}/view/admin/offerDelete" method="post">
 
 <h1><fmt:message key="deletingOffer"/></h1>
 
-<a href=${pageContext.request.contextPath}/view/offerDelete?offer_id=${offer_id}>
+<a href=${pageContext.request.contextPath}/view/admin/offerDelete?offer_id=${offer_id}>
     <button name="remove" value="remove"><fmt:message key="adminRemove_button"/></button>
 </a>
 </form>

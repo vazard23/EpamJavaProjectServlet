@@ -7,6 +7,7 @@ import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +19,7 @@ public class PersonPageCommand implements Command {
         Person person = (Person) req.getSession().getAttribute("person");
         req.getSession().setAttribute("name", person.getName());
         req.getSession().setAttribute("funds", person.getFunds());
+
 
         var factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();

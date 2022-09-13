@@ -22,7 +22,7 @@ public class AdminOfferDeleteCommand implements Command {
                 try {
                     offerService.planDelete(offer_id);
                     offerService.deleteEntity(offer_id);
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminChangeOffer");
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminChangeOffer");
                     return;
                 } catch (NamingException | SQLException | IOException e) {
                     e.printStackTrace();
@@ -30,6 +30,6 @@ public class AdminOfferDeleteCommand implements Command {
             }
 
 
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerDelete.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/offerDelete.jsp");
     }
 }

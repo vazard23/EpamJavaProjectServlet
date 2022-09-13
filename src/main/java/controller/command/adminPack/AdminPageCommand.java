@@ -12,6 +12,6 @@ public class AdminPageCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         Person person = (Person) req.getSession().getAttribute("person");
         req.getSession().setAttribute("name", person.getName());
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminPage.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminPage.jsp");
     }
 }

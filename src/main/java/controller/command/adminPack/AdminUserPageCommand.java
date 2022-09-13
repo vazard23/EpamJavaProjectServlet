@@ -35,7 +35,7 @@ public class AdminUserPageCommand implements Command {
                     Person person = personService.getById(person_id);
                     person.setStatus(2);
                     personService.update(person);
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminUserPage");
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminUserPage");
                     return;
                 } catch (DataBaseException | IOException e) {
                     e.printStackTrace();
@@ -50,7 +50,7 @@ public class AdminUserPageCommand implements Command {
                     Person person = personService.getById(person_id);
                     person.setStatus(1);
                     personService.update(person);
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminUserPage");
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminUserPage");
                     return;
                 } catch (DataBaseException | IOException e) {
                     e.printStackTrace();
@@ -58,7 +58,7 @@ public class AdminUserPageCommand implements Command {
             }
         }
 
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminUserPage.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminUserPage.jsp");
     }
 }
 

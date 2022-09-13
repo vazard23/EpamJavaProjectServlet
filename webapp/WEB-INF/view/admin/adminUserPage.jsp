@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/view/adminUserPage" method="post">
+<form action="${pageContext.request.contextPath}/view/admin/adminUserPage" method="post">
 <h1><fmt:message key="allUsers_table"/></h1>
 <table class="tableService sortable">
     <thead>
@@ -59,12 +59,12 @@
 
             <td>
                 <c:if test="${a.status == 2}">
-                    <a href=${pageContext.request.contextPath}/view/adminUserPage?person_id=${a.id}>
+                    <a href=${pageContext.request.contextPath}/view/admin/adminUserPage?person_id=${a.id}>
                         <button name="unblock"><fmt:message key="adminUnblock_button"/></button>
                     <input type="hidden" name="person_id" value="${a.id}">
                 </c:if>
                 <c:if test="${a.status == 1}">
-                    <a href=${pageContext.request.contextPath}/view/adminUserPage?person_id=${a.id}>
+                    <a href=${pageContext.request.contextPath}/view/admin/adminUserPage?person_id=${a.id}>
                        <button name="block"><fmt:message key="adminBlock_button"/></button>
                     <input type="hidden" name="person_id" value="${a.id}">
                 </c:if>
@@ -75,7 +75,7 @@
 </table>
 </form>
 
-<a href=${pageContext.request.contextPath}/view/adminPage>
+<a href=${pageContext.request.contextPath}/view/admin/adminPage>
     <button name="home"><fmt:message key="adminPage_button"/></button>
 </a>
 

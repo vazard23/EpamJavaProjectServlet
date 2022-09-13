@@ -42,7 +42,7 @@ public abstract class CommandUtil {
         return switch (accessLevel) {
             case 1 -> "/view/mainPage";
             case 2 -> "/view/personPage";
-            case 3 -> "/view/adminPage";
+            case 3 -> "/view/admin/adminPage";
             default -> "";
         };
     }

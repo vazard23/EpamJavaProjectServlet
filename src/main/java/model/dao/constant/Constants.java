@@ -19,6 +19,7 @@ public final class Constants {
     public static final String ALL_PLANS_BY_PERSON_ID = "SELECT * FROM plan WHERE person_id = ?";
     public static final String DELETE_PLANS = "DELETE FROM plan WHERE offer_id = ?";
     public static final String PLAN_GET_TIME = "SELECT date_end FROM plan WHERE person_id = ?";
+    public static final String UPDATE_PLAN = "UPDATE plan SET status_id = ?, person_id =?, offer_id =?, date_end =? WHERE ID = ?";
 
 
     //Selecting constants

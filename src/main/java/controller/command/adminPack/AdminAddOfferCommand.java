@@ -41,11 +41,11 @@ public class AdminAddOfferCommand implements Command {
                     List<String> names = offerService.getAll().stream().map(Offer::getName).toList();
                     if (!names.contains(offer.getName())) {
                         offerService.add(offer);
-                        resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
+                        resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminPage");
                         return;
                     } else {
                         req.setAttribute("name_exists", true);
-                        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddOffer.jsp");
+                        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddOffer.jsp");
                     }
                 } catch (DataBaseException | SQLException | NamingException | IOException | ServiceException e) {
                     e.printStackTrace();
@@ -56,6 +56,6 @@ public class AdminAddOfferCommand implements Command {
         }
 
 
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddOffer.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddOffer.jsp");
     }
 }

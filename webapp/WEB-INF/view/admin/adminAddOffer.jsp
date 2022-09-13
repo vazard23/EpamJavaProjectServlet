@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/view/addOffer" method="post">
+<form action="${pageContext.request.contextPath}/view/admin/addOffer" method="post">
 <fmt:message key="offerAddForm"/>
 <table class="tableService sortable">
     <thead>
@@ -67,7 +67,7 @@
     </tbody>
 </table>
 
-<a href=${pageContext.request.contextPath}/view/addOffer>
+<a href=${pageContext.request.contextPath}/view/admin/addOffer>
     <button name = "btn" value="Add">Add new offer</button>
 </a>
 
@@ -78,7 +78,7 @@
     </c:if>
 </form>
 
-<a href=${pageContext.request.contextPath}/view/adminPage>
+<a href=${pageContext.request.contextPath}/view/admin/adminPage>
     <button name="home"><fmt:message key="adminPage_button"/></button>
 </a>
 

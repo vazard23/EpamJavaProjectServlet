@@ -35,13 +35,13 @@ public class AdminOfferChangeFormCommand implements Command {
                 offerService.updateEntity(offer);
 
                 try {
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminPage");
                     return;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
         }
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/offerChangeForm.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/offerChangeForm.jsp");
     }
 }

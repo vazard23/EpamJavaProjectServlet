@@ -15,12 +15,18 @@ public class DatabaseDaoFactory extends DaoFactory{
 
     private PersonDao personDao = new PersonDatabaseDao();
     private OfferDao offerDao = new OfferDatabaseDao();
+    private PlanDao planDao = new PlanDatabaseDao();
 
 
     @Override
     public PersonDao getPersonDAO() {
 
         return personDao;
+    }
+
+    @Override
+    public PlanDao getPlanDAO(){
+        return planDao;
     }
 
     @Override

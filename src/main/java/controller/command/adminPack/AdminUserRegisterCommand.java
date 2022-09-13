@@ -53,25 +53,25 @@ public class AdminUserRegisterCommand implements Command {
                     person.setAccessLevel(category);
                     person.setStatus(1);
                     personService.add(person);
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/adminPage");
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/adminPage");
                     return;
                 }
             } catch (ServiceException e) {
                 logger.error(e.getMessage());
                 req.setAttribute("notFound", true);
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddUser.jsp");
             } catch (WrongDataException e) {
                 req.setAttribute("wrongData", true);
                 logger.error("Incorrect login or password");
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddUser.jsp");
             } catch (AlreadyExistPersonException e) {
                 req.setAttribute("alreadyExist", true);
                 logger.error("person already exist");
-                CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
+                CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddUser.jsp");
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
         }
-        CommandUtil.goToPage(req, resp, "/WEB-INF/view/adminAddUser.jsp");
+        CommandUtil.goToPage(req, resp, "/WEB-INF/view/admin/adminAddUser.jsp");
     }
 }

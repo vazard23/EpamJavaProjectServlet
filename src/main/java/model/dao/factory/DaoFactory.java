@@ -16,6 +16,8 @@ public abstract class DaoFactory {
 
     public abstract PersonDao getPersonDAO();
 
+    public abstract PlanDao getPlanDAO();
+
     public abstract OfferDao getOfferDao();
 
 }

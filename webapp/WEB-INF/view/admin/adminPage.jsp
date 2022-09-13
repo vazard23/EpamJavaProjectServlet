@@ -15,19 +15,19 @@
 <body>
 <h1><fmt:message key="hello"/>, <%= session.getAttribute("name") %> </h1>
 
-<a href=${pageContext.request.contextPath}/view/addOffer>
+<a href=${pageContext.request.contextPath}/view/admin/addOffer>
     <button><fmt:message key="addOffer_button"/> </button>
 </a>
 
-<a href=${pageContext.request.contextPath}/view/addPerson>
+<a href=${pageContext.request.contextPath}/view/admin/addPerson>
     <button><fmt:message key="registerUser_button"/> </button>
 </a>
 
-<a href=${pageContext.request.contextPath}/view/adminChangeOffer>
+<a href=${pageContext.request.contextPath}/view/admin/adminChangeOffer>
     <button><fmt:message key="adminChange_button"/></button>
 </a>
 
-<a href=${pageContext.request.contextPath}/view/adminUserPage>
+<a href=${pageContext.request.contextPath}/view/admin/adminUserPage>
     <button><fmt:message key="adminUserPage_button"/></button>
 </a>
 

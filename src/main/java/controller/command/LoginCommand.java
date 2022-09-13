@@ -1,8 +1,10 @@
 package controller.command;
 
 import controller.command.utils.CommandUtil;
+import model.dao.impl.PlanDatabaseDao;
 import model.entity.Offer;
 import model.entity.Person;
+import model.entity.Plan;
 import model.exception.NotFoundPersonException;
 import model.exception.WrongDataException;
 import org.apache.log4j.Logger;
@@ -22,6 +24,7 @@ public class LoginCommand implements Command{
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         ServiceFactory factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();
+        var planService = factory.getPlanService();
 
 
         String login = req.getParameter("login");
@@ -34,16 +37,33 @@ public class LoginCommand implements Command{
                 var encrypt = CommandUtil.encrypt(password);
                 Person person = personService.getByLoginAndPass(login, encrypt.orElseThrow(Exception::new));
 
-                List<Timestamp> timeList = offerService.getPlanTime(person.getId());
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-                List<Offer> debtOffers = new ArrayList<>();
+
+                List<Plan> plans = planService.getPlansByUser(person.getId());
+                List<Timestamp> timeList = new ArrayList<>();
+                List<Offer> offers = offerService.getAllOffersById(person.getId());
+                List<Double> prices = new ArrayList<>();
+
+                for(Offer d: offers){
+                    prices.add(d.getPrice());
+                }
+
+                double offerPrices = prices.stream().mapToDouble(d -> d).sum();
+
+                for(Plan p: plans){
+                    timeList.add(p.getDate_end());
+                }
+
+
 
                 for (Timestamp t: timeList)
                 {
-                    if(currentTime.after(t)){
+                    if(currentTime.after(t) && person.getFunds() < offerPrices){
                         person.setStatus(2);
                         personService.update(person);
+                        req.getSession().setAttribute("person", person);
                         resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/blockedPage");
+                        return;
                     }
                 }
 
@@ -52,12 +72,13 @@ public class LoginCommand implements Command{
 
                     String page = CommandUtil.getPersonPageByRole(person.getAccessLevel());
 
-                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded" + page);
-                    return;
-                    //CommandUtil.goToPage(req, resp, page);
+                    CommandUtil.goToPage(req, resp, page);
                 } else {
-                    req.setAttribute("errorMessage", true);
-                    CommandUtil.goToPage(req, resp, "/WEB-INF/view/login.jsp");
+                    person.setStatus(2);
+                    personService.update(person);
+                    req.getSession().setAttribute("person", person);
+                    resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/blockedPage");
+                    return;
                 }
 
             } catch (NotFoundPersonException e) {
