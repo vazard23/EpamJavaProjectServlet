@@ -30,16 +30,19 @@ public class AdminOfferChangeCommand implements Command {
         try {
             offers = offerService.getAll();
             req.setAttribute("offers", offers);
-        } catch (ServiceException e) {
+        } catch (ServiceException | DataBaseException e) {
             e.printStackTrace();
         }
 
         if(req.getParameter("offer_id") != null){
+            logger.info("Getting offer id to change");
             int offer_id = Integer.parseInt(req.getParameter("offer_id"));
             Offer offer = null;
             try {
+                logger.info("Offer id is: " + offer_id);
                 offer = offerService.getOfferById(offer_id);
                 req.getSession().setAttribute("offer", offer);
+                logger.info("Offer id is successfully retrieved, redirecting to change form");
                 resp.sendRedirect("/EpamJavaProjectServlet_Web_exploded/view/admin/offerChangeForm");
                 return;
             } catch (DataBaseException | IOException e) {

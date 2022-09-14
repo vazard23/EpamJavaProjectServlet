@@ -16,8 +16,20 @@
             border-style: groove;
         }
     </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <script src="${pageContext.request.contextPath}/js/download.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 </head>
 <body>
+
+<div class="col-md-12 text-right mb-3">
+    <button class="btn btn-primary" id="download">DOWNLOAD LOL</button>
+</div>
+
+<div class="my-5 page" size="A4" id="invoice">
 <table class="tableService sortable">
     <thead>
     <tr>
@@ -43,6 +55,7 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 <c:if test="${requestScope.hasPlan}">
     <div class="w3-container">
         <fmt:message key="hasPlan"/>

@@ -13,17 +13,17 @@ public interface OfferService {
 
     public boolean add(Offer offer) throws DataBaseException, SQLException, NamingException;
 
-    List<Offer> getAll() throws ServiceException;
+    List<Offer> getAll() throws ServiceException, DataBaseException;
 
-    List<Offer> getAllOffersById(int person_id);
+    List<Offer> getAllOffersById(int person_id) throws DataBaseException;
 
     Offer getOfferById(int offer_id) throws DataBaseException;
 
-    boolean addOfferToPlan(int offer_id, int person_id);
+    boolean addOfferToPlan(int offer_id, int person_id) throws DataBaseException;
 
     boolean hasPlan(int offer_id, int person_id);
 
-    public Offer updateEntity(Offer offer);
+    public Offer updateEntity(Offer offer) throws DataBaseException;
 
     public boolean deleteEntity(Integer id) throws NamingException, SQLException;
 

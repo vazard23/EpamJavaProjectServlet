@@ -13,6 +13,6 @@
     <title>Not Found 404</title>
 </head>
 <body>
-<h1>huy</h1>
+<h1>404 Error</h1>
 </body>
 </html>

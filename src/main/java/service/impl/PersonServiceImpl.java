@@ -22,7 +22,7 @@ public class PersonServiceImpl implements PersonService {
     private PersonDao personDao = daoFactory.getPersonDAO();
 
     @Override
-    public Person getByLoginAndPass(String login, String password) throws NotFoundPersonException, WrongDataException {
+    public Person getByLoginAndPass(String login, String password) throws NotFoundPersonException, WrongDataException, DataBaseException {
         Person person = personDao.getByLoginAndPass(login, password);
 
         if (Objects.isNull(person)) {
@@ -33,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person getByLogin(String login) {
+    public Person getByLogin(String login) throws DataBaseException {
         return personDao.getByLogin(login);
     }
 
@@ -59,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person update(Person entity) {
+    public Person update(Person entity) throws DataBaseException {
         return personDao.updateEntity(entity);
     }
 
@@ -81,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
 
 
     @Override
-    public List<Person> getAllPerson() throws ServiceException {
+    public List<Person> getAllPerson() throws ServiceException, DataBaseException {
         List<Person> all = personDao.getAll();
 
         return all.stream()
@@ -96,7 +96,7 @@ public class PersonServiceImpl implements PersonService {
 
 
     @Override
-    public int getAllBlocked() {
+    public int getAllBlocked() throws DataBaseException {
         return personDao.getCountBlocked(personDao.getAll());
     }
 }

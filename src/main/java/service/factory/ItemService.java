@@ -11,7 +11,7 @@ public interface ItemService <K, T extends Model> {
 
     boolean add(T entity) throws ServiceException;
 
-    T update(T entity);
+    T update(T entity) throws DataBaseException;
 
     boolean delete(K id);
 

@@ -4,7 +4,6 @@ public final class Constants {
     private Constants() {}
     //User constants for DB
     public static final String INSERT_PERSON = "INSERT INTO person (name, login, password, e_mail, access_level, funds, blocked_status, role_id) VALUES (?,?,?,?,?,?,?,?)";
-    public static final String DELETE_PERSON = "DELETE FROM person WHERE ID = ?";
     public static final String UPDATE_PERSON = "UPDATE person SET name = ?, login = ?, password = ?, e_mail = ?, access_level = ?, funds = ?, blocked_status = ?, role_id = ? WHERE ID = ?";
     public static final String ALL_PERSONS = "SELECT * FROM person";
 

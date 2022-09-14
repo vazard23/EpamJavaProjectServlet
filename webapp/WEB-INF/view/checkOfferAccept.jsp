@@ -29,7 +29,7 @@
     </c:if>
 
 </form>
-<script src="${pageContext.request.contextPath}/WEB-INF/js/checkbox.js"></script>
+<script src="${pageContext.request.contextPath}/WEB-INF/js/download.js"></script>
 
 <a href=${pageContext.request.contextPath}/view/personPage>
     <button name="home"><fmt:message key="adminPage_button"/></button>

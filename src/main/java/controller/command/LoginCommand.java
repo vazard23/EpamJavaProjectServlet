@@ -20,8 +20,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class LoginCommand implements Command{
+    private static Logger logger = Logger.getLogger(LoginCommand.class);
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
+        logger.info("In login page");
         ServiceFactory factory = ServiceFactory.getInstance();
         var offerService = factory.getOfferService();
         var planService = factory.getPlanService();
@@ -31,6 +33,7 @@ public class LoginCommand implements Command{
         String password = req.getParameter("password");
 
         if (Objects.nonNull(login) && Objects.nonNull(password)) {
+            logger.info("Trying to login by Login and Pass(Not Null)");
             PersonService personService = factory.getPersonService();
 
             try {
@@ -59,6 +62,7 @@ public class LoginCommand implements Command{
                 for (Timestamp t: timeList)
                 {
                     if(currentTime.after(t) && person.getFunds() < offerPrices){
+                        logger.info("User is being banned due tariff end and insufficient funds, redirecting to Blocked Page");
                         person.setStatus(2);
                         personService.update(person);
                         req.getSession().setAttribute("person", person);
@@ -68,12 +72,14 @@ public class LoginCommand implements Command{
                 }
 
                 if (person.getStatus() == 1) {
+                    logger.info("User logging in");
                     req.getSession().setAttribute("person", person);
 
                     String page = CommandUtil.getPersonPageByRole(person.getAccessLevel());
 
                     CommandUtil.goToPage(req, resp, page);
                 } else {
+                    logger.info("User is blocked by Admin, redirecting to Blocked Page");
                     person.setStatus(2);
                     personService.update(person);
                     req.getSession().setAttribute("person", person);
@@ -82,12 +88,15 @@ public class LoginCommand implements Command{
                 }
 
             } catch (NotFoundPersonException e) {
+                logger.warn("Not found person in Login Command");
                 req.setAttribute("notFound", true);
                 CommandUtil.goToPage(req, resp, "/WEB-INF/view/login.jsp");
             } catch (WrongDataException e) {
+                logger.warn("Wrong data in Login Command");
                 req.setAttribute("wrongData", true);
                 CommandUtil.goToPage(req, resp, "/WEB-INF/view/login.jsp");
             } catch (Exception e) {
+                logger.warn("Unhandled exception in Login Command");
                 e.printStackTrace();
             }
         }

@@ -34,7 +34,19 @@
             <td>${a.name}</td>
             <td>${a.description}</td>
             <td>${a.price}₴</td>
-            <td>${a.category_id}</td>
+            <td>
+                <c:if test="${a.category_id == 1}">
+                    <c:out value="TV"/>
+                </c:if>
+
+                <c:if test="${a.category_id == 2}">
+                    <c:out value="Web"/>
+                </c:if>
+
+                <c:if test="${a.category_id == 3}">
+                    <c:out value="Telephone"/>
+                </c:if></td>
+
             <td>
                 <a href=${pageContext.request.contextPath}/view/admin/adminChangeOffer?offer_id=${a.id}&button=change><fmt:message
                         key="changeButton_table"/> </a>

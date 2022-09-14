@@ -37,12 +37,12 @@ public class OfferServiceImpl implements OfferService {
 
 
     @Override
-    public List<Offer> getAll() throws ServiceException {
+    public List<Offer> getAll() throws ServiceException, DataBaseException {
         return offerDao.getAll();
     }
 
     @Override
-    public List<Offer> getAllOffersById(int person_id) {
+    public List<Offer> getAllOffersById(int person_id) throws DataBaseException {
         return offerDao.getAllOffersById(person_id);
     }
 
@@ -52,7 +52,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public boolean addOfferToPlan(int offer_id, int person_id) {
+    public boolean addOfferToPlan(int offer_id, int person_id) throws DataBaseException {
         return offerDao.addOfferToPlan(offer_id, person_id);
     }
 
@@ -62,7 +62,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer updateEntity(Offer offer) {
+    public Offer updateEntity(Offer offer) throws DataBaseException {
         return offerDao.updateEntity(offer);
     }
 

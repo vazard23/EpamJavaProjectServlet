@@ -14,6 +14,6 @@ public interface CrudDao<K,T extends Model>{
 
     boolean deleteEntity(K id) throws NamingException, SQLException;
 
-    T updateEntity(T entity);
+    T updateEntity(T entity) throws DataBaseException;
 
 }

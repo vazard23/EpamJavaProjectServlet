@@ -17,8 +17,6 @@ import java.util.Objects;
 
 public class RegistrationCommand implements Command {
 
-
-
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) {
         var factory = ServiceFactory.getInstance();

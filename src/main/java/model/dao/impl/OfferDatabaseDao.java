@@ -14,7 +14,7 @@ import java.util.List;
 
 public class OfferDatabaseDao implements OfferDao {
     @Override
-    public List<Offer> getAllOffersById(int person_id) {
+    public List<Offer> getAllOffersById(int person_id) throws DataBaseException {
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ALL_PLANS_BY_PERSON_ID)) {
             statement.setInt(1, person_id);
@@ -35,7 +35,7 @@ public class OfferDatabaseDao implements OfferDao {
             }
             return offers;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getPlansBuId", e);
+            throw new DataBaseException("Cannot getPlansById", e);
         }
     }
 
@@ -90,7 +90,7 @@ public class OfferDatabaseDao implements OfferDao {
     }
 
     @Override
-    public Offer updateEntity(Offer entity) {
+    public Offer updateEntity(Offer entity) throws DataBaseException {
         try (Connection con = Connector.getInstance().getConnection();
              PreparedStatement statement = con.prepareStatement(Constants.UPDATE_OFFER)) {
             con.setAutoCommit(false);
@@ -103,12 +103,12 @@ public class OfferDatabaseDao implements OfferDao {
             con.commit();
             return entity;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot update offer ", e);
+            throw new DataBaseException("Cannot update offer ", e);
         }
     }
 
     @Override
-    public List<Offer> getAll() {
+    public List<Offer> getAll() throws DataBaseException {
         List<Offer> offers = new ArrayList<>();
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ALL_OFFERS)) {
@@ -116,12 +116,12 @@ public class OfferDatabaseDao implements OfferDao {
             offers = initOffer(rs);
             return offers;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getAllEntity offer", e);
+            throw new DataBaseException("Cannot getAllEntity offer", e);
         }
     }
 
     @Override
-    public boolean addOfferToPlan(int offer_id, int person_id) {
+    public boolean addOfferToPlan(int offer_id, int person_id) throws DataBaseException {
         Long time = System.currentTimeMillis() + Long.parseLong("2592000000");
         Timestamp afterThirtyDays = new Timestamp(time);
         try (Connection connection = Connector.getInstance().getConnection();
@@ -135,7 +135,7 @@ public class OfferDatabaseDao implements OfferDao {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot add offer to plan table");
+            throw new DataBaseException("Cannot add offer to plan table");
         }
     }
 

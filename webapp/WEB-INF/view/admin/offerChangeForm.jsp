@@ -89,8 +89,8 @@
             <td>
                 <label for="category"></label>
                 <select id="category" name="categories">
-                    <option value="1">Web</option>
-                    <option value="2">TV</option>
+                    <option value="1">TV</option>
+                    <option value="2">Web</option>
                     <option value="3">Phone</option>
                 </select>
             </td>

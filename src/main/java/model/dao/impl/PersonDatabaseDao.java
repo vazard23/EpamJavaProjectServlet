@@ -67,7 +67,7 @@ public class PersonDatabaseDao implements PersonDao {
                     .setRole(resultSet.getInt("role_id"))
                     .build();
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getByLogin person", e);
+            throw new DataBaseException("Cannot getById person", e);
         }
     }
 
@@ -77,7 +77,7 @@ public class PersonDatabaseDao implements PersonDao {
     }
 
     @Override
-    public Person updateEntity(Person person) {
+    public Person updateEntity(Person person) throws DataBaseException {
         try (Connection con = Connector.getInstance().getConnection();
              PreparedStatement statement = con.prepareStatement(Constants.UPDATE_PERSON)) {
             con.setAutoCommit(false);
@@ -94,12 +94,12 @@ public class PersonDatabaseDao implements PersonDao {
             con.commit();
             return person;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot update user ", e);
+            throw new DataBaseException("Cannot update user ", e);
         }
     }
 
     @Override
-    public List<Person> getAll() {
+    public List<Person> getAll() throws DataBaseException {
         List<Person> outerPeople = new ArrayList<>();
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ALL_PERSONS)) {
@@ -118,12 +118,12 @@ public class PersonDatabaseDao implements PersonDao {
             }
             return outerPeople;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getAllPerson", e);
+            throw new DataBaseException("Cannot getAllPerson", e);
         }
     }
 
     @Override
-    public Person getByLoginAndPass(String login, String password) {
+    public Person getByLoginAndPass(String login, String password) throws DataBaseException {
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.SELECT_BY_LOGIN_AND_PASS)) {
             statement.setString(1, login);
@@ -147,12 +147,12 @@ public class PersonDatabaseDao implements PersonDao {
             }
             return person;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getByLoginAndPass person", e);
+            throw new DataBaseException("Cannot getByLoginAndPass person", e);
         }
     }
 
     @Override
-    public Person getByLogin(String login) {
+    public Person getByLogin(String login) throws DataBaseException {
         try (Connection connection = Connector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.SELECT_BY_LOGIN)) {
             statement.setString(1, login);
@@ -175,7 +175,7 @@ public class PersonDatabaseDao implements PersonDao {
             }
             return person;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot getByLoginAndPass person", e);
+            throw new DataBaseException("Cannot getByLogin person", e);
         }
     }
 

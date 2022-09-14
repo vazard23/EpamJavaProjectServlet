@@ -56,7 +56,6 @@
                 <th data-sortable="false"><fmt:message key="offerDesc_table"/></th>
                 <th data-sortable="true"><fmt:message key="offerPrice_table"/></th>
                 <th data-sortable="false"><fmt:message key="offerCategory_table"/></th>
-                <th data-sortable="false"><fmt:message key="offerStatus_table"/></th>
             </tr>
             </thead>
             <tbody>
@@ -75,8 +74,6 @@
                         <c:if test="${a.category_id == 3}">
                             <c:out value="Telephone" />
                         </c:if>
-                    <td>
-                        Placeholder for status
                     </td>
                 </tr>
             </c:forEach>
